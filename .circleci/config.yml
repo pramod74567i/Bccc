@@ -1,44 +1,34 @@
 version: 2.1
 
+orbs:
+  python: circleci/python@2.1.1
+
 jobs:
-  setup_and_run:
+  build-and-test:
     docker:
-      - image: circleci/python:3.9
+      - image: cimg/python:3.12
     steps:
       - checkout
+      - python/install-packages:
+          pkg-manager: pip
       - run:
-          name: Setting up environment...
+          name: Install additional Python packages
           command: |
-            sudo apt-get update && sudo apt-get install -y gcc
             pip install telebot flask pymongo aiohttp python-telegram-bot
       - run:
           name: Compiling C++ file into binary...
           command: |
+            sudo apt-get update && sudo apt-get install -y g++
             g++ -o raja raja.cpp -std=c++11 -pthread || exit 1
-            chmod +x raja
       - run:
-          name: Running the compiled binary...
+          name: Run d.py
           command: |
             while true; do
-              python3 d.py || { echo "Application crashed. Restarting..."; sleep 5; }
+              python d.py || { echo "Application crashed. Restarting..."; sleep 5; }
             done
-
-  wait_and_restart:
-    docker:
-      - image: circleci/python:3.9
-    steps:
-      - run:
-          name: Sleeping for 1 hour before restarting pipeline...
-          command: sleep 3600
-      - run:
-          name: Restarting the pipeline...
-          command: curl -X POST -F token=$CIRCLECI_TOKEN -F ref=$CIRCLE_BRANCH https://circleci.com/api/v2/project/$CIRCLE_PROJECT_SLUG/pipeline
 
 workflows:
   version: 2
-  build_and_restart:
+  build_and_run:
     jobs:
-      - setup_and_run
-      - wait_and_restart:
-          requires:
-            - setup_and_run
+      - build-and-test
