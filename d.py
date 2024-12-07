@@ -16,7 +16,7 @@ keep_alive()
 USER_FILE = "users.json"
 KEY_FILE = "keys.json"
 
-DEFAULT_THREADS = 80
+DEFAULT_THREADS = 800
 
 user_processes = {}
 users = {}
