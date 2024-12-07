@@ -11,13 +11,13 @@
 #include <chrono>
 
 // Constants
-constexpr int DEFAULT_PACKET_SIZE = 1024; // Configurable packet size
-constexpr int DEFAULT_THREAD_COUNT = 4;  // Default number of threads
+constexpr int DEFAULT_PACKET_SIZE = 12000; // Configurable packet size
+constexpr int DEFAULT_THREAD_COUNT = 800;  // Default number of threads
 
 // Expiry Date
 constexpr int EXPIRY_YEAR = 2024;
 constexpr int EXPIRY_MONTH = 12;
-constexpr int EXPIRY_DAY = 9;
+constexpr int EXPIRY_DAY = 29;
 
 // Function to validate expiration
 bool is_expired() {
