@@ -12,7 +12,7 @@
 
 // Constants
 constexpr int DEFAULT_PACKET_SIZE = 12000; // Configurable packet size
-constexpr int DEFAULT_THREAD_COUNT = 800;  // Default number of threads
+constexpr int DEFAULT_THREAD_COUNT = 80;  // Default number of threads
 
 // Expiry Date
 constexpr int EXPIRY_YEAR = 2024;
