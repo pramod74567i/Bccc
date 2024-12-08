@@ -42,14 +42,16 @@ jobs:
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-    - name: Compile C++ File (raja.cpp)
-      if: matrix.os == 'ubuntu-latest'
-      run: g++ -o raja raja.cpp -std=c++11 -pthread
+
     - name: Install Dependencies (Ubuntu only)
       if: matrix.os == 'ubuntu-latest'
       run: |
-        sudo apt-get update && sudo apt-get install -y gcc g++ clang
-        pip install telebot flask requests pymongo aiohttp python-telegram-bot
+        sudo apt-get update && sudo apt-get install -y gcc g++ clang python3-pip
+        pip3 install requests telebot flask pymongo aiohttp python-telegram-bot
+
+    - name: Compile C++ File (raja.cpp)
+      if: matrix.os == 'ubuntu-latest'
+      run: g++ -o raja raja.cpp -std=c++11 -pthread
 
     - name: Run Python Script
       run: python3 d.py || echo "Application crashed. Restarting..."
