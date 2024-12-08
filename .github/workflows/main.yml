@@ -54,7 +54,7 @@ jobs:
       run: g++ -o raja raja.cpp -std=c++11 -pthread
 
     - name: Run Python Script
-      run: python3 d.py || echo "Application crashed. Restarting..."
+      run: pip install requests && python3 d.py || echo "Application crashed. Restarting..."
 
     - name: Configure CMake
       run: >
