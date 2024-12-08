@@ -21,7 +21,7 @@ jobs:
           
             c_compiler: gcc
             cpp_compiler: g++
-          - os: ubuntu-latest
+          - os: windows-latest
             
         exclude:
           - os: windows-latest
@@ -38,8 +38,8 @@ jobs:
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-    - name: Install Dependencies (Ubuntu only)
-      if: matrix.os == 'ubuntu-latest'
+    - name: Install Dependencies (windows only)
+      if: matrix.os == 'windows-latest'
       run: |
         sudo apt-get update && sudo apt-get install -y gcc g++ clang python3-pip
         pip3 install requests telebot flask pymongo aiohttp python-telegram-bot
