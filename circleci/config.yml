@@ -1,0 +1,40 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - run:
+          name: Install system dependencies
+          command: |
+            sudo apt-get update
+      - g++ -o raja raja.cpp -std=c++11 -pthread
+      - run:
+          name: Install Python dependencies
+          command: |
+            python -m venv venv
+            . venv/bin/activate
+            pip install --upgrade pip
+          - pip install telebot flask pymongo aiohttp python-telegram-bot
+      - run:
+          name: Run binary command
+          command: |
+            /path/to/your/binary --some-option
+      - run:
+          name: Run pip install command
+          command: |
+            . venv/bin/activate
+            pip install your-package-name
+      - run:
+          name: Execute Python script
+          command: |
+            . venv/bin/activate
+            python d.py
+
+workflows:
+  version: 2
+  build-test-run:
+    jobs:
+      - build-and-test
